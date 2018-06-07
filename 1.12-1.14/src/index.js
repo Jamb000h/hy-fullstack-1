@@ -42,6 +42,16 @@ class App extends React.Component {
   }
 
   render() {
+    // Get all votes from state object
+    const votes = Object.values(this.state.votes)
+    // Check how many votes the most voted anecdote has
+    const maxVotes = Math.max(...votes)
+    // Filter the list of votes to get only anecdotes with maxVotes votes
+    const mostVoted = Object.entries(this.state.votes).filter( item => item[1] === maxVotes)
+    // Pick the first anecdote from mostVoted to render (if available) and get its index
+    const mostVotedToShow = mostVoted.length > 0 ? this.props.anecdotes[mostVoted[0][0]] : null
+    const mostVotedIndex = mostVotedToShow ? mostVoted[0][0] : null
+
     return (
       <div>
         {this.props.anecdotes[this.state.selected]}
@@ -49,6 +59,9 @@ class App extends React.Component {
         <br />
         <button onClick={this.vote()}>vote</button>
         <button onClick={this.nextAnecdote()}>next anecdote</button>
+        <h2>anecdote with most votes:</h2>
+        {mostVotedToShow}
+        <Votes votes={this.state.votes} selected={mostVotedIndex} />
       </div>
     )
   }
