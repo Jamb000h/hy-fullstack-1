@@ -11,15 +11,22 @@ const Button = props => {
 
 const PalauteLista = props => {
   return (
-    <div>
+    <tbody>
       <Palaute teksti="hyvä" arvo={props.palautteet.hyva} />
       <Palaute teksti="neutraali" arvo={props.palautteet.neutraali} />
       <Palaute teksti="huono" arvo={props.palautteet.huono} />
-    </div>
+    </tbody>
   )
 }
 
-const Palaute = props => <p>{props.teksti} {props.arvo}</p>
+const Palaute = props => {
+  return (
+    <tr>
+      <td>{props.teksti}</td>
+      <td>{props.arvo}</td>
+    </tr>
+  )
+}
 
 const Statistics = props => {
 
@@ -27,15 +34,19 @@ const Statistics = props => {
 
   if(palautteita === 0) {
     return (
-      <p>ei yhtään palautetta annettu</p>
+      <tbody>
+        <tr>
+          <td>ei yhtään palautetta annettu</td>
+        </tr>
+      </tbody>
     )
   }
 
   return (
-    <div>
+    <tbody>
       <Statistic statistic="keskiarvo" palautteet={props.palautteet} />
       <Statistic statistic="positiivisia" palautteet={props.palautteet} />
-    </div>
+    </tbody>
   )
 }
 
@@ -52,7 +63,10 @@ const Statistic = props => {
     const keskiarvo = summa / palautteita
 
     return (
-      <p>keskiarvo {keskiarvo.toFixed(1)}</p>
+      <tr>
+        <td>keskiarvo</td>
+        <td>{keskiarvo.toFixed(1)}</td>
+      </tr>
     )
   }
 
@@ -61,7 +75,10 @@ const Statistic = props => {
     const positiivisia = props.palautteet.hyva / palautteita * 100
 
     return (
-      <p>positiivisia {positiivisia.toFixed(1)} %</p>
+      <tr>
+        <td>positiivisia</td>
+        <td>{positiivisia.toFixed(1)} %</td>
+      </tr>
     )
   }
 }
@@ -93,8 +110,10 @@ class App extends React.Component {
         <Button teksti="neutraali" onClick={this.lisaaPalaute("neutraali")} />
         <Button teksti="huono" onClick={this.lisaaPalaute("huono")} />
         <Otsikko teksti="statistiikka" />
-        <PalauteLista palautteet={this.state} />
-        <Statistics palautteet={this.state} />
+        <table>
+          <PalauteLista palautteet={this.state} />
+          <Statistics palautteet={this.state} />
+        </table>
       </div>
     )
   }
