@@ -78,7 +78,6 @@ class App extends React.Component {
 
   lisaaPalaute = (palaute) => {
     return () => {
-      console.log("moi")
       this.setState({
         [palaute]: this.state[palaute] + 1
       })
